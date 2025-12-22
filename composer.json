@@ -1,0 +1,25 @@
+{
+  "name": "identspace/ticky",
+  "type": "laravel-package",
+  "version": "0.1.0",
+  "keywords": [
+    "laravel",
+    "timetracking"
+  ],
+  "homepage": "https://github.com/IdentSpace/ticky-laravel",
+  "require": {
+    "php": "^8.1"
+  },
+  "autoload": {
+    "psr-4": {
+      "IdentSpace\\Ticky\\": "src/"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "IdentSpace\\Ticky\\TickyServiceProvider"
+      ]
+    }
+  }
+}
