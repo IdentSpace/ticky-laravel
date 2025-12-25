@@ -2,6 +2,8 @@
 namespace IdentSpace\Ticky;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Route;
+
 class TickyServiceProvider extends ServiceProvider
 {
     public function boot(): void
@@ -16,5 +18,14 @@ class TickyServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__.'/../Config/ticky.php' => config_path('ticky.php'),
         ], 'ticky-config');
+
+        $this->registerRoutes();
+    }
+
+    protected function registerRoutes(): void
+    {
+        Route::prefix('api')
+            ->middleware('api')
+            ->group(__DIR__.'/../routes/api.php');
     }
 }

@@ -11,12 +11,21 @@ return new class extends TickyMigration
      */
     public function up(): void
     {
+        Schema::create('ticky_audit', function (Blueprint $table) {
+            $table->id();
+            $table->string('table_name');
+            $table->string('action');
+            $table->string('row_id');
+            $table->longText('row_data')->nullable();
+            $table->timestamps();
+        });
+
         Schema::create('ticky_customers', function (Blueprint $table) {
             $table->uuid('uuid')->primary();
             $table->unsignedBigInteger('user_id')->nullable()->index();
             $table->uuid('organisation_id')->nullable();
             $table->string('name');
-
+            $table->longText('note')->nullable();
             $table->tickySync();
         });
 
@@ -30,6 +39,7 @@ return new class extends TickyMigration
             $table->string('city')->nullable();
             $table->string('country')->nullable();
             $table->integer('icon_value')->nullable();
+            $table->longText('note')->nullable();
 
             $table->tickySync();
         });
@@ -41,6 +51,7 @@ return new class extends TickyMigration
             $table->string('name');
             $table->integer('color_value')->nullable();
             $table->integer('icon_value')->nullable();
+            $table->longText('note')->nullable();
 
             $table->tickySync();
         });
@@ -52,6 +63,7 @@ return new class extends TickyMigration
             $table->uuid('organisation_id')->nullable();
             $table->string('internal_id')->nullable();
             $table->string('name');
+            $table->longText('note')->nullable();
             $table->integer('color_value')->nullable();
 
             $table->tickySync();
@@ -80,5 +92,6 @@ return new class extends TickyMigration
         Schema::dropIfExists('ticky_projects');
         Schema::dropIfExists('ticky_categories');
         Schema::dropIfExists('ticky_locations');
+        Schema::dropIfExists('ticky_audit');
     }
 };
