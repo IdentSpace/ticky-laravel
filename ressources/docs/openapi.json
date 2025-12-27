@@ -1,0 +1,29 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Ticky API",
+    "version": "0.1.0"
+  },
+  "paths": {
+    "/api/ticky/record/create": {
+      "post": {
+        "summary": "Create new time tracking record",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "start": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

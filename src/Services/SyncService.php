@@ -1,7 +1,7 @@
 <?php
-namespace IdentSpace\Ticky\Http\Controllers;
+namespace IdentSpace\Ticky\Services;
 
-class SyncController
+class SyncService
 {
     static public function pull()
     {

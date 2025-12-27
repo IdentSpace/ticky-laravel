@@ -4,11 +4,11 @@ namespace IdentSpace\Ticky\Models;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
 
-class TickyRecord extends Model
+class TickyCategory extends Model
 {
     public $incrementing = false;
-    protected $table = 'ticky_records';
-    protected $fillable = ['uuid','user_id','description','start', 'locked', 'category_id'];
+    protected $table = 'ticky_categories';
+    protected $fillable = ['uuid','user_id', 'name', 'note'];
 
     protected static function booted()
     {

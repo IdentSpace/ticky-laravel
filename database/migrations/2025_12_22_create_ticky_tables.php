@@ -2,15 +2,16 @@
 
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use IdentSpace\Ticky\Support\Migrations\TickyMigration;
+use Illuminate\Database\Migrations\Migration;
 
-return new class extends TickyMigration
+return new class extends Migration
 {
     /**
      * Run the migrations.
      */
     public function up(): void
     {
+        // TODO: DEV
         Schema::create('ticky_audit', function (Blueprint $table) {
             $table->id();
             $table->string('table_name');
@@ -20,6 +21,7 @@ return new class extends TickyMigration
             $table->timestamps();
         });
 
+        // TODO: DEV
         Schema::create('ticky_customers', function (Blueprint $table) {
             $table->uuid('uuid')->primary();
             $table->unsignedBigInteger('user_id')->nullable()->index();
@@ -29,6 +31,7 @@ return new class extends TickyMigration
             $table->tickySync();
         });
 
+        // TODO: DEV
         Schema::create('ticky_locations', function (Blueprint $table) {
             $table->uuid('uuid')->primary();
             $table->unsignedBigInteger('user_id')->nullable()->index();
@@ -44,6 +47,7 @@ return new class extends TickyMigration
             $table->tickySync();
         });
 
+        // TODO: DEV
         Schema::create('ticky_categories', function (Blueprint $table) {
             $table->uuid('uuid')->primary();
             $table->unsignedBigInteger('user_id')->nullable()->index();
@@ -56,6 +60,7 @@ return new class extends TickyMigration
             $table->tickySync();
         });
 
+        // TODO: DEV
         Schema::create('ticky_projects', function (Blueprint $table) {
             $table->uuid('uuid')->primary();
             $table->uuid('customer_id')->nullable();
@@ -71,15 +76,26 @@ return new class extends TickyMigration
 
         Schema::create('ticky_records', function (Blueprint $table) {
             $table->uuid('uuid')->primary();
-            $table->unsignedBigInteger('user_id')->nullable()->index();
+
+            $table->unsignedBigInteger('user_id')->index();
+
             $table->uuid('organisation_id')->nullable();
+            $table->uuid('category_id')->nullable();
+
+            $table->foreignId('category_id')->nullable()->constrained('ticky_categories');
+            $table->foreignId('project_id')->nullable()->constrained('ticky_projects');
+            $table->foreignId('location_id')->nullable()->constrained('ticky_locations');
+
             $table->string('description')->nullable();
             $table->dateTime('start');
             $table->dateTime('end')->nullable();
-            $table->bool('locked')->default(false);
+            $table->boolean('locked')->default(false);
             $table->integer('color_value')->nullable();
 
             $table->tickySync();
+
+            // TODO: auto update
+            // TODO: on delete, audit entry
         });
     }
 
@@ -92,6 +108,7 @@ return new class extends TickyMigration
         Schema::dropIfExists('ticky_projects');
         Schema::dropIfExists('ticky_categories');
         Schema::dropIfExists('ticky_locations');
+        Schema::dropIfExists('ticky_customers');
         Schema::dropIfExists('ticky_audit');
     }
 };
